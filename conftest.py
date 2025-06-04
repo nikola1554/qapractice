@@ -4,6 +4,6 @@ import pytest
 @pytest.fixture()
 def browser():
     chrome_browser = webdriver.Chrome()
-    chrome_browser.implicitly_wait(5)
+    chrome_browser.implicitly_wait(2)
     chrome_browser.maximize_window()
     return chrome_browser
