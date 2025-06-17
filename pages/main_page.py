@@ -6,6 +6,7 @@ text_input_link_selector = (By.LINK_TEXT, 'Text input')
 simple_button_link_selector = (By.LINK_TEXT, 'Simple button')
 single_ui_elements_list_selector = (By.CLASS_NAME, 'has-sub')
 single_checkbox_page_selector = (By.XPATH, '//*[@href="/elements/checkbox"]')
+single_select_page_selector = (By.XPATH, '//*[@href="/elements/select/single_select"]')
 
 class MainPage(BasePage):
     def __init__(self, browser):
@@ -32,5 +33,9 @@ class MainPage(BasePage):
         self.browser.get(url)
         self.single_ui_elements_list().click()
         self.single_checkbox_page().click()
+
+    def open_select_page(self):
+        self.open_main_page()
+        self.find(single_select_page_selector).click()
 
 
