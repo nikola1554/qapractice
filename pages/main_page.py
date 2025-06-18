@@ -6,6 +6,8 @@ text_input_link_selector = (By.LINK_TEXT, 'Text input')
 simple_button_link_selector = (By.LINK_TEXT, 'Simple button')
 single_ui_elements_list_selector = (By.CLASS_NAME, 'has-sub')
 single_checkbox_page_selector = (By.XPATH, '//*[@href="/elements/checkbox"]')
+new_tab_link_page_selector = (By.XPATH, '//*[@href="/elements/new_tab"]')
+alert_page_selector = (By.XPATH, '//*[@href="/elements/alert"]')
 single_select_page_selector = (By.XPATH, '//*[@href="/elements/select/single_select"]')
 
 class MainPage(BasePage):
@@ -33,6 +35,16 @@ class MainPage(BasePage):
         self.browser.get(url)
         self.single_ui_elements_list().click()
         self.single_checkbox_page().click()
+
+    def open_new_tab_link_page(self):
+        self.browser.get(url)
+        self.single_ui_elements_list().click()
+        self.find(new_tab_link_page_selector).click()
+
+    def open_alert_page(self):
+        self.browser.get(url)
+        self.single_ui_elements_list().click()
+        self.find(alert_page_selector).click()
 
     def open_select_page(self):
         self.open_main_page()
