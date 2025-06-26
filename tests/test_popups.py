@@ -54,6 +54,20 @@ def test_popup_modal_closing_by_close_button(browser):
     time.sleep(1)
     assert not popup_modal_page.check_result_text_is_displayed()
 
+def test_iframe_popup_incorrect_text(browser):
+    main_page = MainPage(browser)
+    main_page.open_popup_modal_page()
+    popup_modal_page = PopUpModalPage(browser)
+    popup_modal_page.open_iframe_popup_page()
+    iframe_popup_page = IframePopUpPage(browser)
+    iframe_popup_page.press_launch_popup_button()
+    time.sleep(1)
+    iframe_popup_page.press_check_button_in_iframe()
+    iframe_popup_page.send_copied_text_to_input_field()
+    iframe_popup_page.press_submit_button()
+    assert result_incorrect_text == iframe_popup_page.check_result_text()
+    assert incorrect_background_color == iframe_popup_page.check_background_color_of_result_text()
+
 def test_iframe_popup_correct_text(browser):
     main_page = MainPage(browser)
     main_page.open_popup_modal_page()
@@ -70,16 +84,3 @@ def test_iframe_popup_correct_text(browser):
     assert result_correct_text == iframe_popup_page.check_result_text()
     assert correct_background_color == iframe_popup_page.check_background_color_of_result_text()
 
-def test_iframe_popup_incorrect_text(browser):
-    main_page = MainPage(browser)
-    main_page.open_popup_modal_page()
-    popup_modal_page = PopUpModalPage(browser)
-    popup_modal_page.open_iframe_popup_page()
-    iframe_popup_page = IframePopUpPage(browser)
-    iframe_popup_page.press_launch_popup_button()
-    time.sleep(1)
-    iframe_popup_page.press_check_button_in_iframe()
-    iframe_popup_page.send_copied_text_to_input_field()
-    iframe_popup_page.press_submit_button()
-    assert result_incorrect_text == iframe_popup_page.check_result_text()
-    assert incorrect_background_color == iframe_popup_page.check_background_color_of_result_text()
