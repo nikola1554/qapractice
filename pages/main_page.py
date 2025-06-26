@@ -10,6 +10,7 @@ new_tab_link_page_selector = (By.XPATH, '//*[@href="/elements/new_tab"]')
 alert_page_selector = (By.XPATH, '//*[@href="/elements/alert"]')
 single_select_page_selector = (By.XPATH, '//*[@href="/elements/select/single_select"]')
 iframe_page_selector = (By.XPATH, '//*[@href="/elements/iframe/iframe_page"]')
+popup_modal_page_selector = (By.XPATH, '//*[@href="/elements/popup"]')
 
 class MainPage(BasePage):
     def __init__(self, browser):
@@ -50,10 +51,13 @@ class MainPage(BasePage):
     def open_select_page(self):
         self.open_main_page()
         self.find(single_select_page_selector).click()
-
+        
     def open_iframe_page(self):
         self.open_main_page()
         self.single_ui_elements_list().click()
         self.find(iframe_page_selector).click()
 
-
+    def open_popup_modal_page(self):
+        self.open_main_page()
+        self.single_ui_elements_list().click()
+        self.find(popup_modal_page_selector).click()
