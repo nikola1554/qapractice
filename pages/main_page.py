@@ -11,6 +11,7 @@ alert_page_selector = (By.XPATH, '//*[@href="/elements/alert"]')
 single_select_page_selector = (By.XPATH, '//*[@href="/elements/select/single_select"]')
 iframe_page_selector = (By.XPATH, '//*[@href="/elements/iframe/iframe_page"]')
 popup_modal_page_selector = (By.XPATH, '//*[@href="/elements/popup"]')
+dragndrop_page_selector = (By.XPATH, '//*[@href="/elements/dragndrop"]')
 
 class MainPage(BasePage):
     def __init__(self, browser):
@@ -61,3 +62,8 @@ class MainPage(BasePage):
         self.open_main_page()
         self.single_ui_elements_list().click()
         self.find(popup_modal_page_selector).click()
+
+    def open_dragndrop_boxes_page(self):
+        self.open_main_page()
+        self.single_ui_elements_list().click()
+        self.find(dragndrop_page_selector).click()
