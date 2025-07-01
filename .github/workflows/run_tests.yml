@@ -1,7 +1,24 @@
 name: Automated tests
 
 on:
-  push
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: Choose target
+        required: true
+        default:
+        type: choice
+        options:
+          - Run_all_tests
+          - Alerts_test
+          - Buttons_test
+          - Checkboxes_test
+          - Drag_n_drop_test
+          - Iframe_test
+          - Inputs_test
+          - New_tab_test
+          - Popup_test
+          - Selects_test
 
 jobs:
   test:
@@ -18,5 +35,33 @@ jobs:
         run: sudo apt-get install google-chrome-stable
       - name: install dependencies
         run: pip install -r requirements.txt
-      - name: Run tests
-        run: pytest
+      - name: Run_all_tests
+        if: "github.event.inputs.deployment_target == 'Run_all_tests'"
+        run: pytest -v
+      - name: Alerts_test
+        if: "github.event.inputs.deployment_target == 'Alerts_test'"
+        run: pytest -v tests/test_alerts.py
+      - name: Buttons_test
+        if: "github.event.inputs.deployment_target == 'Buttons_test'"
+        run: pytest -v tests/test_buttons.py
+      - name: Checkboxes_test
+        if: "github.event.inputs.deployment_target == 'Checkboxes_test'"
+        run: pytest -v tests/test_checkboxes.py
+      - name: Drag_n_drop_test
+        if: "github.event.inputs.deployment_target == 'Drag_n_drop_test'"
+        run: pytest -v tests/test_drag_n_drop.py
+      - name: Iframe_test
+        if: "github.event.inputs.deployment_target == 'Iframe_test'"
+        run: pytest -v tests/test_iframe.py
+      - name: Inputs_test
+        if: "github.event.inputs.deployment_target == 'Inputs_test'"
+        run: pytest -v tests/test_inputs.py
+      - name: New_tab_test
+        if: "github.event.inputs.deployment_target == 'New_tab_test'"
+        run: pytest -v tests/test_new_tab.py
+      - name: Popup_test
+        if: "github.event.inputs.deployment_target == 'Popup_test'"
+        run: pytest -v tests/test_popups.py
+      - name: Selects_test
+        if: "github.event.inputs.deployment_target == 'Selects_test'"
+        run: pytest -v tests/test_selets.py
