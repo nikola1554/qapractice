@@ -20,6 +20,11 @@ on:
           - Popup_test
           - Selects_test
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -66,7 +71,7 @@ jobs:
         if: "github.event.inputs.deployment_target == 'Selects_test'"
         run: pytest -v tests/test_selets.py --alluredir=allure-results
       - name: Store allure results
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: allure-results
           path:
@@ -87,7 +92,7 @@ jobs:
         uses: actions/download-artifact@v3
       - run: allure generate -c allure-results -o _site
       - name: Store generated report
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: _site
           path:
