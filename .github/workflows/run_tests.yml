@@ -30,38 +30,79 @@ jobs:
       - name: setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13"
+          python-version: "3.13.2"
       - name: Install Chrome
         run: sudo apt-get install google-chrome-stable
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: Run_all_tests
         if: "github.event.inputs.deployment_target == 'Run_all_tests'"
-        run: pytest -v
+        run: pytest -v --alluredir=allure-results
       - name: Alerts_test
         if: "github.event.inputs.deployment_target == 'Alerts_test'"
-        run: pytest -v tests/test_alerts.py
+        run: pytest -v tests/test_alerts.py --alluredir=allure-results
       - name: Buttons_test
         if: "github.event.inputs.deployment_target == 'Buttons_test'"
-        run: pytest -v tests/test_buttons.py
+        run: pytest -v tests/test_buttons.py --alluredir=allure-results
       - name: Checkboxes_test
         if: "github.event.inputs.deployment_target == 'Checkboxes_test'"
-        run: pytest -v tests/test_checkboxes.py
+        run: pytest -v tests/test_checkboxes.py --alluredir=allure-results
       - name: Drag_n_drop_test
         if: "github.event.inputs.deployment_target == 'Drag_n_drop_test'"
-        run: pytest -v tests/test_drag_n_drop.py
+        run: pytest -v tests/test_drag_n_drop.py --alluredir=allure-results
       - name: Iframe_test
         if: "github.event.inputs.deployment_target == 'Iframe_test'"
-        run: pytest -v tests/test_iframe.py
+        run: pytest -v tests/test_iframe.py --alluredir=allure-results
       - name: Inputs_test
         if: "github.event.inputs.deployment_target == 'Inputs_test'"
-        run: pytest -v tests/test_inputs.py
+        run: pytest -v tests/test_inputs.py --alluredir=allure-results
       - name: New_tab_test
         if: "github.event.inputs.deployment_target == 'New_tab_test'"
-        run: pytest -v tests/test_new_tab.py
+        run: pytest -v tests/test_new_tab.py --alluredir=allure-results
       - name: Popup_test
         if: "github.event.inputs.deployment_target == 'Popup_test'"
-        run: pytest -v tests/test_popups.py
+        run: pytest -v tests/test_popups.py --alluredir=allure-results
       - name: Selects_test
         if: "github.event.inputs.deployment_target == 'Selects_test'"
-        run: pytest -v tests/test_selets.py
+        run: pytest -v tests/test_selets.py --alluredir=allure-results
+      - name: Store allure results
+        uses: action/upload-artifact@v3
+        with:
+          name: allure-results
+          path:
+            allure-results
+          retention-days: 1
+
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: test
+    name: Generate report
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+      - run: sudo wget https://github.com/allure_framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+      - run: allure generate -c allure-results -o _site
+      - name: Store generated report
+        uses: action/upload-artifact@v3
+        with:
+          name: _site
+          path:
+            _site
+          retention-days: 1
+
+  publish-report:
+    runs-on: ubuntu-latest
+    needs: generate-report
+    name: Report publication
+    steps:
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@1.2.9
