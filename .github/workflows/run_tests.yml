@@ -71,7 +71,7 @@ jobs:
         if: "github.event.inputs.deployment_target == 'Selects_test'"
         run: pytest -v tests/test_selets.py --alluredir=allure-results
       - name: Store allure results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path:
@@ -89,10 +89,10 @@ jobs:
           java-version: '17'
       - run: sudo wget https://github.com/allure_framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - run: allure generate -c allure-results -o _site
       - name: Store generated report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: _site
           path:
@@ -105,7 +105,7 @@ jobs:
     name: Report publication
     steps:
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
       - name: Deploy to Github Pages
