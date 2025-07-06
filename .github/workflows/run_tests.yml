@@ -37,7 +37,7 @@ jobs:
         with:
           python-version: "3.13.2"
       - name: Install Firefox
-        run: sudo apt install firefox && sudo snap install firefox
+        run: sudo snap install firefox
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: Run_all_tests
