@@ -6,7 +6,7 @@ on:
       deployment_target:
         description: Choose target
         required: true
-        default:
+        default: Run_all_tests
         type: choice
         options:
           - Run_all_tests
