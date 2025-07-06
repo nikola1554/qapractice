@@ -39,8 +39,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.13.2"
-      - name: Install Chrome
-        run: sudo apt-get install google-chrome-stable
+      - name: Install Firefox
+        run: sudo apt-get install firefox
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: Run_all_tests
