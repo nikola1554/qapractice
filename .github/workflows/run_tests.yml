@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: "3.13.2"
       - name: Install Chrome
-        run: sudo apt-get install google-chrome-stable
+        run: sudo apt-get install libxss1 libappindicator1 libindicator7 && sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome*.deb
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: Run_all_tests
