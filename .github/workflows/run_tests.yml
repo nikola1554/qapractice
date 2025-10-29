@@ -27,10 +27,10 @@ permissions:
 
 jobs:
   download-history:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Download history
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
@@ -92,7 +92,7 @@ jobs:
           retention-days: 1
 
   generate-report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: test
     name: Generate report
     steps:
@@ -113,7 +113,7 @@ jobs:
           retention-days: 1
 
   publish-report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: generate-report
     name: Report publication
     steps:
